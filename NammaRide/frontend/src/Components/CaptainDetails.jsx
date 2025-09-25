@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { CaptainDataContext } from '../context/CaptainContext';
 import useFetchCaptain from '../hooks/useFetchCaptain'; 
+import Loading from './Loading';
 
 const CaptainDetails = () => {
   const { captain, stats, isLoading } = useContext(CaptainDataContext);
@@ -15,7 +16,7 @@ const CaptainDetails = () => {
 };
 
 
-  if (isLoading || !captain) return <p>Loading...</p>;
+  if (isLoading || !captain) return <Loading/>;
 
   return (
     <div className="p-2  bg-white ">
