@@ -69,12 +69,14 @@ const RidePopUp = ({ ride, ridePopupPanel, setRidePopupPanel, setConfirmRidePopu
 
         <div className="flex items-center justify-between p-3 bg-[#d0db9b] rounded-lg mt-4">
           <div className="flex items-center gap-3">
-            <img
+            {/* <img
               className="h-12 w-10 rounded-full object-cover"
               src={ride?.user?.avatar || "https://th.bing.com/th/id/OIP.jSFa5zJREQf6N6zOSAEOfgHaE8?w=249&h=180&c=7&r=0&o=5&pid=1.7"}
               alt={ride?.user?.fullname || "Rider"}
-            />
-            <h3 className="text-lg font-medium">{ride?.user?.fullname || "Unknown Rider"}</h3>
+            /> */}
+            {/* <h3 className="text-lg font-medium">{ride?.user?.fullname || "Unknown Rider"}</h3> */}
+
+            <h3 className="text-xl font-semibold ml-2">Total distance :</h3>
           </div>
           <h3 className="text-lg font-semibold">{ride?.distance ? `${ride.distance} KM` : "Calculating..."}</h3>
         </div>

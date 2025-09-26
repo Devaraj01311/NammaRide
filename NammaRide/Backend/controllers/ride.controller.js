@@ -27,44 +27,53 @@ module.exports.createRide = async (req, res) => {
     console.log(" Ride created:", ride);
     res.status(201).json(ride);
 
-    // Notify nearby captains
-    (async () => {
-      try {
-        const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
-        console.log("Pickup coordinates:", pickupCoordinates);
+  // Notify nearby captains
+(async () => {
+  try {
+    const pickupCoordinates = await mapService.getAddressCoordinate(pickup);
+    console.log("Pickup coordinates:", pickupCoordinates);
 
-        const captainsInRadius = await mapService.getCaptainInTheRadius(
-          pickupCoordinates.lat,
-          pickupCoordinates.lng,
-          2
-        );
-        console.log(`Captains found in radius: ${captainsInRadius.length}`);
+    const captainsInRadius = await mapService.getCaptainInTheRadius(
+      pickupCoordinates.lat,
+      pickupCoordinates.lng,
+      2
+    );
+    console.log(`Captains found in radius: ${captainsInRadius.length}`);
 
-        const rideWithUser = await rideModel.findById(ride._id).populate('user');
-        if (!rideWithUser.user) {
-          console.log("No user found for ride");
-          return;
-        }
+    const rideWithUser = await rideModel.findById(ride._id).populate("user");
+    if (!rideWithUser.user) {
+      console.log("No user found for ride");
+      return;
+    }
 
-        const rideData = {
-          ...rideWithUser.toObject(),
-          user: {
-            _id: rideWithUser.user._id,
-            fullname: `${rideWithUser.user.fullname.firstname} ${rideWithUser.user.fullname.lastname || ''}`,
-            email: rideWithUser.user.email,
-            socketId: rideWithUser.user.socketId
-          },
-          otp: "" // don’t expose OTP to captains
-        };
+    const rideData = {
+      ...rideWithUser.toObject(),
+      user: {
+        _id: rideWithUser.user._id,
+        fullname: `${rideWithUser.user.fullname.firstname} ${rideWithUser.user.fullname.lastname || ""}`,
+        email: rideWithUser.user.email,
+        socketId: rideWithUser.user.socketId,
+      },
+      otp: "", 
+    };
 
-        captainsInRadius.forEach(captain => {
-          console.log(`Emitting new ride to captain ${captain._id}`);
-          sendMessageToSocketId(captain.socketId, 'new-ride', rideData);
-        });
-      } catch (err) {
-        console.error(" Error dispatching ride:", err.message);
-      }
-    })();
+    // Filter captains by vehicleType before sending
+    captainsInRadius.forEach((captain) => {
+    if (captain.vehicle?.vehicleType === vehicleType) {
+  console.log(`Emitting new ride (${vehicleType}) to captain ${captain._id}`);
+  sendMessageToSocketId(captain.socketId, "new-ride", rideData);
+} else {
+  console.log(
+    `Skipping captain ${captain._id} (has ${captain.vehicle?.vehicleType}, requested ${vehicleType})`
+  );
+}
+
+    });
+  } catch (err) {
+    console.error(" Error dispatching ride:", err.message);
+  }
+})();
+
 
   } catch (err) {
     console.error(" createRide error:", err.message);
