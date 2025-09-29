@@ -75,10 +75,10 @@ module.exports.getCaptainProfile = async (req, res) => {
     res.status(200).json({
       captain: req.captain,
       stats: {
-        totalEarnings: totalEarnings.toFixed(2),
+        totalEarnings: parseFloat(totalEarnings.toFixed(2)),
         totalTrips,
-        totalKm: totalKm.toFixed(2),
-        totalHoursOnline: totalHoursOnline.toFixed(2)
+        totalKm: parseFloat(totalKm.toFixed(2)),
+        totalHoursOnline: parseFloat(totalHoursOnline.toFixed(2))
       }
     });
   } catch (err) {

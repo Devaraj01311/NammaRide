@@ -26,9 +26,16 @@ const WaitingForDriver = (props) => {
           alt={props.vehicleType}
         />
         <div className="text-right">
-          <h2 className="text-lg font-semibold text-gray-800 capitalize">
+          <div className="flex justify-end gap-2 items-center">
+            <img 
+           className="h-8 w-8 rounded-full object-cover mx-auto mb-1"
+            src="https://images.freeimages.com/images/premium/previews/1396/13965355-young-cheerful-indian-auto-rickshaw-driver.jpg"
+            alt="Captain"
+          />
+          <h2 className="text-xl h-8  font-bold text-gray-800 capitalize">
             {props.ride?.captain?.fullname.firstname} {props.ride?.captain?.fullname.lastname}
           </h2>
+          </div>
           <h3 className="text-xl font-bold text-gray-700 -mt-1 -mb-1">
             {props.ride?.captain?.vehicle.plate}
           </h3>
