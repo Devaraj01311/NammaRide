@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoadingCircle = () => {
+const LoadingPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
       <div className="w-20 h-20 rounded-full border-8 border-t-transparent animate-spin"
@@ -13,4 +13,4 @@ const LoadingCircle = () => {
   );
 };
 
-export default LoadingCircle;
+export default LoadingPage;
