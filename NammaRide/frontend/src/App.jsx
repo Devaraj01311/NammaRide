@@ -13,6 +13,8 @@ import CaptainProtectWrapper from './pages/CaptainProtectWrapper';
 import Riding from './pages/Riding';
 import CaptainRiding from './pages/CaptainRiding';
 import 'remixicon/fonts/remixicon.css'
+import ForgotPassword from './Components/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
 
 
 
@@ -39,6 +41,9 @@ const App = () => {
       <Route path='/captain-home' element={<CaptainProtectWrapper>
         <CaptainHome />
       </CaptainProtectWrapper>} />
+       <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      
       </Routes>
     </div>
   );

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { body } = require("express-validator");
 const authMiddleware = require('../middlewares/auth.middleware');
+const {forgotPassword, resetPassword} = require('../controllers/captain.controller');
 console.log(" captain.routes.js loaded");
 
 
@@ -31,6 +32,7 @@ router.get('/profile', authMiddleware.authCaptain, captainController.getCaptainP
 router.get('/logout', authMiddleware.authCaptain, captainController.logoutCaptain);
 
 
-
+router.post('/forgot-password', captainController.forgotPassword);
+router.post('/reset-password', captainController.resetPassword);
 
 module.exports = router;
